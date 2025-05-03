@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tasbeeh Counter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #dbeafe, #f0f9ff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 280px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #2563eb;
+    }
+
+    .count {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+
+    .buttons button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .increment {
+      background-color: #4ade80;
+      color: white;
+    }
+
+    .increment:hover {
+      background-color: #22c55e;
+    }
+
+    .reset {
+      background-color: #f87171;
+      color: white;
+    }
+
+    .reset:hover {
+      background-color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tasbeeh Counter</h1>
+    <div class="count" id="countDisplay"></div>
+    <div class="buttons">
+      <button class="reset" onclick="resetCount()">Reset</button>
+      <button class="increment" onclick="incrementCount()">+</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
