@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  .tasbeeh{
+    background-color: darkgreen;
+    width: 400px;
+    margin: auto;
+    border-radius: 30px;
+  }
+  .count {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  .buttons button {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .increment {
+    background-color:#5086f8;
+    color: white;
+  }
+
+  .increment:hover {
+    background-color: #2563eb;
+  }
+
+  .reset {
+    background-color: #f87171;
+    color: white;
+  }
+
+  .reset:hover {
+    background-color: #ef4444;
+  }
