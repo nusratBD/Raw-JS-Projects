@@ -5,6 +5,7 @@ Quran Daily is a simple web application that lists all Surahs (chapters) of the 
 - ✅ Display a list of all Surahs from the Quran
 - ✅ Show details of each Surah on click
 - ✅ Day & Night Mode
+- ✅ Last Read Surah added to the Local Storage
 - (More features coming soon...)
 
 

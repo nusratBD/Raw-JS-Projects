@@ -14,6 +14,25 @@ const toggleDarkMode=()=>{
         localStorage.setItem("mode", "night");
     }
 }
+const mySurah=JSON.parse(localStorage.getItem("my-surah"));
+document.addEventListener("DOMContentLoaded",()=>{
+    if(mySurah){
+        surahDetail(mySurah);
+    }else{
+        surahContainer.innerHTML="";
+    }
+})
+console.log(mySurah);
+const surahDetail=(data)=>{
+    console.log(data);
+    surahName.textContent=`${data.surahNo}. ${data.surahName}`;
+    data.arabic1.forEach((arabic,index)=>{
+        surahContainer.innerHTML+=`
+        <p><strong>${index+1}.</strong> ${arabic}<p>
+        <p> ${data.english[index]}<p>
+        `;
+    })
+}
 //Show All Surahs
 document.addEventListener("DOMContentLoaded",()=>{
     fetch(`https://quranapi.pages.dev/api/surah.json`)
@@ -36,12 +55,7 @@ fetch(`https://quranapi.pages.dev/api/${surahNumber}.json`)
 .then(res=>res.json())
 .then(data=>{
     console.log(data);
-    surahName.textContent=`${surahNumber}. ${data.surahName}`;
-    data.arabic1.forEach((arabic,index)=>{
-        surahContainer.innerHTML+=`
-        <p><strong>${index+1}.</strong> ${arabic}<p>
-        <p> ${data.english[index]}<p>
-        `;
-    })
+    surahDetail(data);
+    localStorage.setItem("my-surah",JSON.stringify(data));
 });
 }
