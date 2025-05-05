@@ -1,3 +1,19 @@
+//Day & Night Mode
+let modeData=localStorage.getItem("mode");
+if(modeData=="night"){
+    document.body.classList.add("mode");
+}else{
+    document.body.classList.remove("mode");
+}
+const toggleDarkMode=()=>{
+    if(modeData=="night"){
+        document.body.classList.toggle("mode");
+        localStorage.setItem("mode", "day");
+    }else{
+        document.body.classList.toggle("mode");
+        localStorage.setItem("mode", "night");
+    }
+}
 //Show All Surahs
 document.addEventListener("DOMContentLoaded",()=>{
     fetch(`https://quranapi.pages.dev/api/surah.json`)
@@ -15,6 +31,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 const surahName=document.getElementById("surahName");
 const surahContainer=document.getElementById("surahContainer");
 const searchSurah=(surahNumber)=>{
+surahContainer.innerHTML="";
 fetch(`https://quranapi.pages.dev/api/${surahNumber}.json`)
 .then(res=>res.json())
 .then(data=>{

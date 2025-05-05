@@ -5,12 +5,21 @@ body {
     display: flex;
     flex-direction: column;
   }
-  
+  .mode{
+    background-color: #525453;
+    color: white;
+  }
   header {
+    position: relative;
     background-color: #00897b;
     color: white;
     padding: 1rem;
     text-align: center;
+  }
+  #headerBtn{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
   }
   
   #searchInput {
@@ -23,18 +32,20 @@ body {
   main {
     display: flex;
     height: 100vh;
+    width: 100%;
   }
   
   #surahList {
-    width: 30%;
-    background-color: #f2f2f2;
+    width: 25%;
+    /* background-color: #f2f2f2; */
     overflow-y: scroll;
     padding: 1rem;
   }
-  
-  #ayahContainer {
+  #content{
+    width: 75%;
     flex: 1;
     padding: 1rem;
     overflow-y: scroll;
   }
+  
   

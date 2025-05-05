@@ -4,6 +4,7 @@ Quran Daily is a simple web application that lists all Surahs (chapters) of the 
 ## 🚀 Features
 - ✅ Display a list of all Surahs from the Quran
 - ✅ Show details of each Surah on click
+- ✅ Day & Night Mode
 - (More features coming soon...)
 
 

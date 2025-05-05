@@ -6,11 +6,12 @@
   <title>Qur'an Search & Read</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="">
 
   <header>
     <h1>📖 Qur'an Search & Read App</h1>
     <input type="text" id="searchInput" placeholder="Search Surah...">
+    <button class="btn btn-sm btn-secondary" id="headerBtn" onclick="toggleDarkMode()">🌙 Night/Day Mode</button>
   </header>
 
   <main>
@@ -19,8 +20,8 @@
       <!-- Surah List will load here -->
     </aside>
 
-    <section>
-      <h2 id="surahName">Select a Surah to Read</h2>
+    <section id="content">
+      <h2 id="surahName" style="margin-left: 10px;">Select a Surah to Read</h2>
        <div id="surahContainer" style="padding-left: 15px;"><!-- Ayahs will display here --></div>
     </section>
   </main>
