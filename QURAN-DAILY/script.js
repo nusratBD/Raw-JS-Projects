@@ -1,8 +1,8 @@
 //Show Surah List on Left Side Bar
-document.addEventListener("DOMContentLoaded",()=>{
-    fetch(`https://quranapi.pages.dev/api/surah.json`)
-    .then(res=>res.json())
-    .then(data=>{;
+document.addEventListener("DOMContentLoaded",async()=>{
+    await fetch(`https://quranapi.pages.dev/api/surah.json`)
+    .then( res=> res.json())
+    .then(data=>{
         const surahList=document.getElementById("surahList");
         data.forEach((surah,index) => {
             surahList.innerHTML+=`
@@ -34,11 +34,14 @@ const surahDetail=(data)=>{
 //Show Specific Surah when Cliking on the Name from left Side Bar
 const surahName=document.getElementById("surahName");
 const surahContainer=document.getElementById("surahContainer");
-const searchSurah=(surahNumber)=>{
+const searchSurah=async(surahNumber)=>{
+surahName.textContent="Surah Loading....";
+surahName.style.color="#00897b";
 surahContainer.innerHTML="";
-fetch(`https://quranapi.pages.dev/api/${surahNumber}.json`)
+await fetch(`https://quranapi.pages.dev/api/${surahNumber}.json`)
 .then(res=>res.json())
 .then(data=>{
+    surahName.style.color="black";
     surahDetail(data);
     localStorage.setItem("my-surah",JSON.stringify(data));
 });
