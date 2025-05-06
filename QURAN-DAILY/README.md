@@ -7,6 +7,7 @@ Quran Daily is a simple web application that lists all Surahs (chapters) of the 
 - ✅ Day & Night Mode
 - ✅ Last Read Surah add to the Local Storage
 - ✅ Ayah BookMark
+- ✅ Ayah UnBookmark from BookMark List
 - (More features coming soon...)
 
 

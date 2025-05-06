@@ -1,40 +1,4 @@
-//Day & Night Mode
-let modeData=localStorage.getItem("mode");
-if(modeData=="night"){
-    document.body.classList.add("mode");
-}else{
-    document.body.classList.remove("mode");
-}
-const toggleDarkMode=()=>{
-    if(modeData=="night"){
-        document.body.classList.toggle("mode");
-        localStorage.setItem("mode", "day");
-    }else{
-        document.body.classList.toggle("mode");
-        localStorage.setItem("mode", "night");
-    }
-}
-const mySurah=JSON.parse(localStorage.getItem("my-surah"));
-document.addEventListener("DOMContentLoaded",()=>{
-    if(mySurah){
-        surahDetail(mySurah);
-    }else{
-        surahContainer.innerHTML="";
-    }
-})
-// console.log(mySurah);
-const surahDetail=(data)=>{
-    // console.log(data);
-    surahName.textContent=`${data.surahNo}. ${data.surahName}`;
-    data.arabic1.forEach((arabic,index)=>{
-        surahContainer.innerHTML+=`
-        <p><strong>${index+1}.</strong> ${arabic}<p>
-        <p> ${data.english[index]}<p>
-        <button onclick="bookmarkAyah('${index+1}', '${data.surahName}','${arabic}', '${data.english[index]}')" id="${data.surahName}-${index+1}">⭐ Bookmark</button>
-        `;
-    })
-}
-//Show All Surahs
+//Show Surah List on Left Side Bar
 document.addEventListener("DOMContentLoaded",()=>{
     fetch(`https://quranapi.pages.dev/api/surah.json`)
     .then(res=>res.json())
@@ -47,7 +11,27 @@ document.addEventListener("DOMContentLoaded",()=>{
         });
     });
 })
-//Show Specific Surah
+//Show Specific Surah if You Select Before
+const mySurah=JSON.parse(localStorage.getItem("my-surah"));
+document.addEventListener("DOMContentLoaded",()=>{
+    if(mySurah){
+        surahDetail(mySurah);
+    }else{
+        surahContainer.innerHTML="";
+    }
+})
+//Specific Surah Detail Layout
+const surahDetail=(data)=>{
+    surahName.textContent=`${data.surahNo}. ${data.surahName}`;
+    data.arabic1.forEach((arabic,index)=>{
+        surahContainer.innerHTML+=`
+        <p><strong>${index+1}.</strong> ${arabic}<p>
+        <p> ${data.english[index]}<p>
+        <button onclick="bookmarkAyah('${index+1}', '${data.surahName}','${arabic}', '${data.english[index]}')" id="${data.surahName}-${index+1}">⭐ Bookmark</button>
+        `;
+    })
+}
+//Show Specific Surah when Cliking on the Name from left Side Bar
 const surahName=document.getElementById("surahName");
 const surahContainer=document.getElementById("surahContainer");
 const searchSurah=(surahNumber)=>{
@@ -55,28 +39,24 @@ surahContainer.innerHTML="";
 fetch(`https://quranapi.pages.dev/api/${surahNumber}.json`)
 .then(res=>res.json())
 .then(data=>{
-    // console.log(data);
     surahDetail(data);
     localStorage.setItem("my-surah",JSON.stringify(data));
 });
 }
-//Book Mark Specific Ayah
-const allBookMarks=JSON.parse(localStorage.getItem("book-mark"))||[];
+//Book Mark Specific Ayah from the Surah
+let allBookMarks=JSON.parse(localStorage.getItem("book-mark"))||[];
 document.addEventListener("DOMContentLoaded",()=>{
     allBookMarks.forEach(mark=>
         {
             const bBtnId=mark.name+"-"+mark.id;
-
-        const bookMarkBtn=document.getElementById(bBtnId);
-
-        bookMarkBtn.setAttribute("disabled", true);
+            const bookMarkBtn=document.getElementById(bBtnId);
+            bookMarkBtn.setAttribute("disabled", true);
         }
         );
 })
+//Bookmark Successful Message
 const bookmarkAyah=(id, name,arabic,english)=>{
     id=parseInt(id);
-    const btnId=name+"-"+(id);
-
     const bookMark={
         id:id,
         name:name,
@@ -90,7 +70,7 @@ const bookmarkAyah=(id, name,arabic,english)=>{
     showToast("✅ Bookmark added!");
     localStorage.setItem("book-mark",JSON.stringify(allBookMarks));
 }
-//Show Toast
+//Bookmark successful message operation
 function showToast(message) {
     const toast = document.getElementById("toast");
     toast.textContent = message;
@@ -98,7 +78,7 @@ function showToast(message) {
       toast.className = "toast";
     }, 3000);
   }
-//Show BookMarked Ayahs
+//Show BookMarked Ayahs cliking on All Bookmarks Button
 const bookmarkModal=document.getElementById("bookmarkModal");
 const bookMarkList=document.getElementById("bookmarkList");
 const showBookMark=()=>{
@@ -108,13 +88,27 @@ const showBookMark=()=>{
         bookMarkList.innerHTML = "<p>No bookmarks found.</p>";
     }else{
         allBookMarks.forEach(bookMark=>{
-            bookMarkList.innerHTML+=`<p><strong>${bookMark.name}-${bookMark.id}: </strong>${bookMark.arabic}</p>
+            bookMarkList.innerHTML+=`<div  id="${bookMark.id}-${bookMark.name}">
+                <p><strong>${bookMark.name}-${bookMark.id}: </strong>${bookMark.arabic}</p>
             <p>${bookMark.english}</p>
-            <button onclick="showBookMark()" >⭐ UnBookmark</button>`
+            <button onclick="UnBookmark('${bookMark.name}','${bookMark.id}')">⭐ UnBookmark</button>
+            </div>`
         })
     }
 }
-//Close BookMark Model
+//Close BookMark Model while cliking on close button
 const closeBookmarkModal=()=>{
     bookmarkModal.style.display="none";
+}
+//UnBookmark
+const UnBookmark=(name,id)=>{
+    const divId=id+"-"+name;
+    const unBookmarkdiv=document.getElementById(divId);
+    unBookmarkdiv.remove();
+    const filterUnBookMark=allBookMarks.filter(bookMark=>bookMark.id!=id||bookMark.name!=name);
+    allBookMarks=[...filterUnBookMark];
+    localStorage.setItem("book-mark",JSON.stringify(allBookMarks));
+    showBookMark();
+    const bBtnId=name+"-"+id;
+    document.getElementById(bBtnId).removeAttribute("disabled");
 }
