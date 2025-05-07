@@ -11,12 +11,12 @@
   <header>
     <h1>📖 Qur'an Search & Read App</h1>
     <input type="text" id="searchInput" placeholder="Search Surah...">
+    <button class="search-btn" id="searchBtn">🔍 Search</button>
     <div class="headerBtn">
       <button onclick="showBookMark()" >⭐All Bookmarks</button>
     <button class="btn btn-sm btn-secondary" onclick="toggleDarkMode()">🌙 Night/Day Mode</button>
     </div>
   </header>
-
   <main>
     <aside id="surahList">
       <h2>Surah List</h2>
@@ -41,9 +41,18 @@
     <div id="bookmarkList"></div>
   </div>
 </div>
-<script src="script.js"></script>
+<!-- Specific Ayah will be showed here -->
+<div id="ayahModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" id="close">✖</span>
+    <h2 id="modalSurahTitle">Surah Name - Ayah</h2>
+    <p id="modalAyahArabic" style="font-size: 24px; text-align: right; font-weight: bold;"></p>
+    <p id="modalAyahEnglish" style="margin-top: 10px;"></p>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+<script src="api.js"></script>
+<script src="script.js" ></script>
 <script src="mode.js"></script>
-<script src="search.js" type="module"></script>
-<script src="api.js" type="module"></script>
+<script src="search.js"></script>
 </body>
 </html>

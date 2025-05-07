@@ -9,7 +9,7 @@ Quran Daily is a simple web application that lists all Surahs (chapters) of the 
 - ✅ Ayah BookMark
 - ✅ Ayah UnBookmark from BookMark List
 - ✅ Loader at the time of data fetching from api
-- (More features coming soon...)
+- ✅ Dynamic Ayah Search
 
 
 ## 🛠️ Technologies Used
@@ -17,3 +17,4 @@ Quran Daily is a simple web application that lists all Surahs (chapters) of the 
 - ✅ HTML
 - ✅ CSS
 - ✅ JavaScript (Vanilla)
+- ✅ fuse.js
