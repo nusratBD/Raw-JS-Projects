@@ -1,8 +1,12 @@
+let allBookMarks=JSON.parse(localStorage.getItem("book-mark"))||[];
+const loading=document.getElementById("loading");
 //Show Surah List on Left Side Bar
 document.addEventListener("DOMContentLoaded",async()=>{
+    loading.innerHTML=`<h2>Loading...</h2>`;
     await fetch(`https://quranapi.pages.dev/api/surah.json`)
     .then( res=> res.json())
     .then(data=>{
+        loading.innerHTML="";
         const surahList=document.getElementById("surahList");
         data.forEach((surah,index) => {
             surahList.innerHTML+=`
@@ -24,39 +28,34 @@ document.addEventListener("DOMContentLoaded",()=>{
 const surahDetail=(data)=>{
     surahName.textContent=`${data.surahNo}. ${data.surahName}`;
     data.arabic1.forEach((arabic,index)=>{
-        surahContainer.innerHTML+=`
-        <p><strong>${index+1}.</strong> ${arabic}<p>
-        <p> ${data.english[index]}<p>
-        <button onclick="bookmarkAyah('${index+1}', '${data.surahName}','${arabic}', '${data.english[index]}')" id="${data.surahName}-${index+1}">⭐ Bookmark</button>
-        `;
+        surahContainer.innerHTML += `
+  <p><strong>${index + 1}.</strong> ${arabic}</p>
+  <p>${data.english[index]}</p>
+  ${
+    allBookMarks
+      .filter(mark => mark.name === data.surahName && mark.id == index + 1)
+      .length > 0
+      ? `<button onclick="bookmarkAyah('${index + 1}', '${data.surahName}','${arabic}', '${data.english[index]}')" id="${data.surahName}-${index + 1}" disabled>⭐ Bookmark</button>`
+      : `<button onclick="bookmarkAyah('${index + 1}', '${data.surahName}','${arabic}', '${data.english[index]}')" id="${data.surahName}-${index + 1}">⭐ Bookmark</button>`
+  }
+`;
     })
+    
 }
+
 //Show Specific Surah when Cliking on the Name from left Side Bar
 const surahName=document.getElementById("surahName");
 const surahContainer=document.getElementById("surahContainer");
 const searchSurah=async(surahNumber)=>{
 surahName.textContent="Surah Loading....";
-surahName.style.color="#00897b";
 surahContainer.innerHTML="";
 await fetch(`https://quranapi.pages.dev/api/${surahNumber}.json`)
 .then(res=>res.json())
 .then(data=>{
-    surahName.style.color="black";
     surahDetail(data);
     localStorage.setItem("my-surah",JSON.stringify(data));
 });
 }
-//Book Mark Specific Ayah from the Surah
-let allBookMarks=JSON.parse(localStorage.getItem("book-mark"))||[];
-document.addEventListener("DOMContentLoaded",()=>{
-    allBookMarks.forEach(mark=>
-        {
-            const bBtnId=mark.name+"-"+mark.id;
-            const bookMarkBtn=document.getElementById(bBtnId);
-            bookMarkBtn.setAttribute("disabled", true);
-        }
-        );
-})
 //Bookmark Successful Message
 const bookmarkAyah=(id, name,arabic,english)=>{
     id=parseInt(id);
@@ -85,19 +84,22 @@ function showToast(message) {
 const bookmarkModal=document.getElementById("bookmarkModal");
 const bookMarkList=document.getElementById("bookmarkList");
 const showBookMark=()=>{
-    bookmarkModal.style.display="block";
     bookMarkList.innerHTML="";
+    console.log(allBookMarks);
     if( allBookMarks.length==0){
         bookMarkList.innerHTML = "<p>No bookmarks found.</p>";
     }else{
         allBookMarks.forEach(bookMark=>{
+            console.log(bookMark);
             bookMarkList.innerHTML+=`<div  id="${bookMark.id}-${bookMark.name}">
                 <p><strong>${bookMark.name}-${bookMark.id}: </strong>${bookMark.arabic}</p>
             <p>${bookMark.english}</p>
             <button onclick="UnBookmark('${bookMark.name}','${bookMark.id}')">⭐ UnBookmark</button>
-            </div>`
+            </div>
+            `
         })
     }
+    bookmarkModal.style.display="block";
 }
 //Close BookMark Model while cliking on close button
 const closeBookmarkModal=()=>{
