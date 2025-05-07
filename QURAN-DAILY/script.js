@@ -95,11 +95,13 @@ const showBookMark = () => {
     } else {
         allBookMarks.forEach(bookMark => {
             bookMarkList.innerHTML += `<div  id="${bookMark.id}-${bookMark.name}">
-                <p><strong>${bookMark.name}-${bookMark.id}: </strong>${bookMark.arabic}</p>
+            <h2><strong>${bookMark.name} - Ayah ${bookMark.id}</strong></h2>
+                <p><strong></strong>${bookMark.arabic}</p>
             <p>${bookMark.english}</p>
             <button onclick="UnBookmark('${bookMark.name}','${bookMark.id}')">⭐ UnBookmark</button>
             </div>
-        `})
+        `
+        })
     }
     bookmarkModal.style.display = "block";
 }
